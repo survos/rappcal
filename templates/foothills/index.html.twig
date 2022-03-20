@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello FoothillsController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <h1>Foothills Forum Stories</h1>
+    <div>
+        Stay up to date, join our email list!
+        {% set url = 'https://foothills-forum.org/contact/' %}
+        <img class="float-start {{ class|default('qr') }}" src="{{ qr_code_url(url) }}" />
+        <br />{{ url }}
+
+
+    </div>
+</div>
+    <ul>
+    {% for story in articles %}
+        <li>
+            <h1 class="float-start">
+                <span >{{ story.headline }}</span>
+            </h1>
+            <img class="float-start {{ class|default('qr') }}" src="{{ qr_code_url(story.url) }}" />
+            <hr />
+        </li>
+    {% endfor %}
+    </ul>
+{% endblock %}

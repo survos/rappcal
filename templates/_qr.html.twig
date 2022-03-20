@@ -1,0 +1,13 @@
+<div class="d-none d-print-block">
+    <img class="{{ class|default('qr') }}" src="{{ qr_code_url(app.request.uri|replace({'http:': 'https:'}) ) }}" alt="{{ app.request.uri }}"/>
+</div>
+
+{#<a href="{{ path('print_queue_new', project.rp({objClass: get_class(obj), objId: obj.id, objParams: obj.rp|json_encode, template: app.request.get('_route')})) }}">#}
+{#    <button>#}
+{#    {{ 'print'|trans }}#}
+{#</button>#}
+{#</a>#}
+<div class="d-none">
+</div>
+
+
