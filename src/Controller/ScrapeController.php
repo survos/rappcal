@@ -14,7 +14,7 @@ use Symfony\Contracts\Cache\CacheInterface;
 use Symfony\Contracts\Cache\ItemInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
-class FoothillsController extends AbstractController
+class ScrapeController extends AbstractController
 {
     public function __construct(private CacheInterface $cache, private HttpClientInterface $httpClient) {
 
@@ -28,6 +28,28 @@ class FoothillsController extends AbstractController
             'controller_name' => 'FoothillsController',
         ]);
     }
+
+    #[Route('/at_home', name: 'app_rapp_at_home')]
+    public function at_home(): Response
+    {
+        return $this->render('foothills/index.html.twig', [
+            'articles' => $this->scrapeEvents(),
+        ]);
+    }
+
+    private function scrapeEvents() {
+        $url = 'https://rappathome.net/content.aspx?page_id=4001&club_id=442822';
+        $html = $this->cache->get(md5($url), function(ItemInterface $item) use ($url) {
+            $item->expiresAfter(60 * 60 * 24);
+            // actually do the fetch
+            return $this->httpClient->request('GET', $url)->getContent();
+//        $response  = $this->httpClient('GET', $url);
+        });
+        $crawler = new Crawler($html, $url);
+
+
+    }
+
 
     private function scrapeArticles()
     {
