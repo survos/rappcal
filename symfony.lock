@@ -146,6 +146,9 @@
             "config/packages/sensio_framework_extra.yaml"
         ]
     },
+    "survos/maker-bundle": {
+        "version": "2.1.0"
+    },
     "symfony/asset": {
         "version": "v6.0.3"
     },
