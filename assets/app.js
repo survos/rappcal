@@ -11,6 +11,8 @@ import './styles/app.css';
 // start the Stimulus application
 import './bootstrap';
 
+import '@fullcalendar/core';
+
 document.addEventListener('DOMContentLoaded', () => {
     var calendarEl = document.getElementById('calendar-holder');
 
@@ -22,6 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 url: "/fc-load-events",
                 method: "POST",
                 extraParams: {
+                    url: 'someIcsUrl',
                     filters: JSON.stringify({})
                 },
                 failure: () => {
