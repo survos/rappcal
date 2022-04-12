@@ -1,0 +1,15 @@
+HTTP/1.1 200 OK
+Cache-Control: no-cache
+Pragma: no-cache
+Content-Type: text/plain; charset=utf-8
+Expires: -1
+Server: ClubExpress
+s: 4
+X-XSS-Protection: 1
+Referrer-Policy:  no-referrer
+X-Content-Type-Options: nosniff
+Content-Security-Policy: default-src https: *; script-src https: 'unsafe-inline' 'unsafe-eval' *;img-src data: https:;font-src data: https:;style-src https: 'unsafe-inline' *;upgrade-insecure-requests;frame-ancestors 'self'; base-uri 'none'; frame-src mailto: *; worker-src blob: ; child-src blob: ;
+Date: Tue, 12 Apr 2022 13:28:40 GMT
+Content-Length: 27
+
+1|#||4|3|pageRedirect||%2f|
