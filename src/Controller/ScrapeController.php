@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\DTO\Story;
 use App\Entity\UrlCache;
 use Goutte\Client;
+use League\Csv\Reader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\HttpClient\HttpClient;
@@ -27,27 +28,6 @@ class ScrapeController extends AbstractController
             'articles' => $this->scrapeArticles(),
             'controller_name' => 'FoothillsController',
         ]);
-    }
-
-    #[Route('/at_home', name: 'app_rapp_at_home')]
-    public function at_home(): Response
-    {
-        return $this->render('foothills/index.html.twig', [
-            'articles' => $this->scrapeEvents(),
-        ]);
-    }
-
-    private function scrapeEvents() {
-        $url = 'https://rappathome.net/content.aspx?page_id=4001&club_id=442822';
-        $html = $this->cache->get(md5($url), function(ItemInterface $item) use ($url) {
-            $item->expiresAfter(60 * 60 * 24);
-            // actually do the fetch
-            return $this->httpClient->request('GET', $url)->getContent();
-//        $response  = $this->httpClient('GET', $url);
-        });
-        $crawler = new Crawler($html, $url);
-
-
     }
 
 
