@@ -45,26 +45,6 @@ class ScrapeController extends AbstractController
         ]);
     }
 
-    #[Route('/ics.ics', name: 'app_calendar_ics', methods: ['POST','GET'])]
-    public function ics(Request $request, EventRepository $eventRepository): Response
-    {
-
-        $calendar = Calendar::create();
-
-        $event = \Spatie\IcalendarGenerator\Components\Event::create()
-            ->name('Laracon Online')
-            ->description('Experience Laracon all around the world')
-            ->uniqueIdentifier('A unique identifier can be set here')
-            ->createdAt(new \DateTimeImmutable())
-            ->startsAt(new \DateTimeImmutable())
-            ->endsAt(new \DateTimeImmutable("+ 1hour"));
-
-        $ics = Calendar::create('Laracon online')
-            ->event($event)
-            ->get();
-//        dd($ics);
-        return new Response($ics, 200, ['Content-Type'=> 'text/calendar']);
-    }
 
     // ideally the ISC feed.
 

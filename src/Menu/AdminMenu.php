@@ -37,8 +37,6 @@ class AdminMenu extends BaseAdminMenu
     {
         $u = $builder->root();
         $this->addMenuItem($u, ['route' => 'app_test']);
-        $this->addMenuItem($u, ['route' => 'app_calendar_ics']);
-        $this->addMenuItem($u, ['route' => 'app_calendar_ics']);
 
         // _docs/html/
 
