@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello R@H!{% endblock %}
+
+{% block body %}
+
+    <table class="table">
+            {% for e in private %}
+        <tr>
+            <td>
+                {{ e.title }}
+            </td>
+            <td>
+                {{ e['Start Date'] }}
+            </td>
+            <td>
+                {{ e['Short Description'] }}
+            </td>
+        </tr>
+            {% endfor %}
+
+    </table>
+
+{#    {% for e in private %}#}
+{#        {{ dump(e) }}#}
+{#    {% endfor %}#}
+
+
+{% endblock %}

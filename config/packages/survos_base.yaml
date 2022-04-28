@@ -1,0 +1,11 @@
+survos_base:
+    theme: umbrella
+twig:
+    globals:
+       theme: umbrella
+    paths:
+       'vendor/survos/base-bundle/src/Resources/views/umbrella': 'theme'
+
+umbrella_admin:
+  app_name: Rapp Calendar
+  menu: App\Menu\AdminMenu

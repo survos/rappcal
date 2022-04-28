@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\DTO\Story;
 use Goutte\Client;
 use League\Csv\Reader;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -19,6 +20,155 @@ class ScrapeService
                                 private CacheInterface $cache) {
 
     }
+
+
+    private function getPage(string $url): string {
+        $html = $this->cache->get(md5($url), function(ItemInterface $item) use ($url) {
+//            $item->expiresAfter(60 * 60 * 24);
+            // actually do the fetch
+            return $this->httpClient->request('GET', $url)->getContent();
+//        $response  = $this->httpClient('GET', $url);
+        });
+
+
+        return $html;
+
+    }
+
+    private function webpageToStory($url): Story {
+        $html = $this->getPage($url);
+
+        $crawler = new Crawler($html);
+
+
+        $headline = $crawler->filterXPath('//h1/span')->first()->innerText();
+
+        $story = new Story(url: $url, html: null, headline: $headline);
+
+        dump($url);
+
+        $headline = $crawler->filterXPath(' //*[@property="og:title"]')->attr('content');
+        $author = $crawler->filterXPath(' //meta [@name="author"]')->attr('content');
+        $story->date = $crawler->filterXPath(' //time')->attr('datetime');
+        $story->author = $author;
+        $story->description = $crawler->filterXPath(' //*[@property="og:description"]')->attr('content');
+
+//        <time datetime="2022-02-18T09:30:00-05:00"
+
+        //*[//meta[@property="og:url"]/@content
+
+//        <meta property="og:url" content="https://www.rappnews.com/foothills_forum/young-and-youngish-in-rappahannock/article_b6f2a3a2-9064-11ec-90b5-7f3bf894a1a8.html" />
+
+//        $creditNodes = $crawler->filterXPath(' //*[@itemprop="author"]');
+//        $creditNodes->each(function(Crawler $node) {
+//            dump($node->innerText());
+//        });
+//        dd($creditNodes);
+//
+////        $author = $crawler->filterXPath('//')->first()->innerText();
+//dd('x');
+
+//        <div class="meta">
+//        <span>
+//            <ul class="list-inline">
+//        <li><span itemprop="author" class="tnt-byline">By Bob Hurley for Foothills Forum</span></li>
+
+
+        $imageNodes = $crawler->filterXPath(' //*[@itemprop="image"]');
+        if (is_array($imageNodes)) {
+            dd($imageNodes);
+        } else {
+            $imageNode = $imageNodes->first();
+            if (!$imageNode->count()) {
+                return $story; //
+                dd($imageNodes, $imageNode);
+            }
+            assert($imageNode->count(), "Missing imageNode");
+//            dump($imageNode->outerHtml());
+        }
+
+
+        try {
+            $imageNode = $imageNodes->first();
+        } catch (\Exception $exception) {
+            dd($imageNodes, $imageNodes->outerHtml(), $exception);
+        }
+        //*[@itemprop="homeLocation"]/meta[@itemprop="name"]/@content
+//        dump($headline, $imageNode->outerHtml());
+
+        $urlNodes = $imageNode->evaluate($xPath = '//meta[@itemprop="url"]');
+            if (is_array($urlNodes)) {
+                dd($urlNodes, $url, is_array($imageNode) ? $imageNode : $imageNode->outerHtml());
+            } else {
+                // it's a crawler, not a simple type
+                $urlNode = $urlNodes->first();
+            }
+
+        try {
+        } catch (\Exception $exception) {
+            dd($urlNodes, $urlNodes->outerHtml(), $exception);
+        }
+        $imageUrl = $urlNode->attr('content');
+            $story->image = $imageUrl;
+//        dd($urlNode, $content);
+//        assert($urlNode->count(), "Missing " . $xPath . " in " . $imageNode->outerHtml());
+//        try {
+//            dd($urlNode->outerHtml(), $urlNode->innerText());
+//        } catch (\Exception $exception) {
+//            dd($imageNode, $urlNode, $imageNode->outerHtml(), $exception);
+//        }
+//
+//
+//        $headline = $crawler->filter('body h1 span')->first()->innerText();
+//        $image = $crawler->filter('div [itemprop="image"]')->first();
+//
+//        // hack
+//        $meta = $image->filter('meta [itemprop="url"]')->first();
+//        dd($meta);
+//        dd($meta->nodeName());
+//        dd($meta, $meta->outerHtml(), $meta->innerText());
+//        dd($image, $image->outerHtml());
+//
+//
+//
+//
+//        dd($headline, $meta, $meta->outerHtml(), $image, $url);
+
+        return $story;
+
+    }
+
+    public function scrapeFoothillsArticles()
+    {
+
+        $url = 'https://www.rappnews.com/news/foothills/';
+        $html = $this->cache->get(md5($url), function(ItemInterface $item) use ($url) {
+//            dd('fetching ' . $url);
+//            $item->expiresAfter(60 * 60 * 24);
+            // actually do the fetch
+            return $this->httpClient->request('GET', $url)->getContent();
+//        $response  = $this->httpClient('GET', $url);
+        });
+        $crawler = new Crawler($html, $url);
+
+        $articles = [];
+
+        $x = $crawler->filter('.card-body a.tnt-asset-link')->each(function(Crawler $node) use ($articles) {
+            $base = 'https://www.rappnews.com';
+            $url = $base . $node->attr('href');
+            $story = $this->webpageToStory($url);
+            return $story;
+        });
+        return $x;
+        return $articles;
+
+        $crawler->filter('.card-body a.tnt-asset-link')->each(function(Crawler $node) {
+            dd($node->innerText(), $node->outerHtml());
+        });
+        return $html;
+
+    }
+
 
     public function scrapePublicEvents() {
         // get public events, or get the downloaded events.
