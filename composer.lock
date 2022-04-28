@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6ff21b5972208c86fb7c2c9882754416",
+    "content-hash": "8404183241fa0a530062713c33a716af",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -4229,6 +4229,98 @@
                 "issues": "https://github.com/survos/BaseBundle/issues"
             },
             "time": "2022-03-30T12:20:04+00:00"
+        },
+        {
+            "name": "survos/maker-bundle",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:survos/AdminMakerBundle.git",
+                "reference": "c481b0577856ab9605c62aaf71718e399be14a75"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/survos/AdminMakerBundle/zipball/c481b0577856ab9605c62aaf71718e399be14a75",
+                "reference": "c481b0577856ab9605c62aaf71718e399be14a75",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">= 8.0",
+                "symfony/config": ">= 5.4",
+                "symfony/console": "^6.0",
+                "symfony/options-resolver": ">= 5.4",
+                "symfony/process": ">= 5.4",
+                "symfony/string": ">= 5.4",
+                "twig/twig": "^2.0|^3.0"
+            },
+            "require-dev": {
+                "doctrine/doctrine-bundle": "^1.12.3|^2.0",
+                "doctrine/orm": "^2.3",
+                "phpstan/phpstan": "^1.4",
+                "sensio/framework-extra-bundle": "^6.2",
+                "symfony/form": ">= 5.4",
+                "symfony/http-client": "^4.4|^5.0|^6.0",
+                "symfony/maker-bundle": "^1.38",
+                "symfony/phpunit-bridge": "^4.4|^5.0|^6.0",
+                "symfony/polyfill-php80": "^1.16.0",
+                "symfony/process": "^4.4|^5.0|^6.0",
+                "symfony/security-core": "^4.4|^5.0|^6.0",
+                "symfony/security-csrf": "^6.0",
+                "symfony/twig-bundle": ">= 5.4",
+                "symfony/validator": ">= 5.4",
+                "symfony/workflow": "^6.0",
+                "symfony/yaml": "^4.4|^5.0|^6.0"
+            },
+            "default-branch": true,
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.1.0"
+                },
+                "symfony": {
+                    "allow-contrib": "true",
+                    "id": "maker-bundle.survos.com"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Survos\\Bundle\\MakerBundle\\": "src"
+                }
+            },
+            "scripts": {
+                "test": [
+                    "vendor/bin/phpunit"
+                ],
+                "test-ci": [
+                    "vendor/bin/phpunit --coverage-text --coverage-clover=build/coverage.xml coverage"
+                ],
+                "test-coverage": [
+                    "php -d xdebug.mode=coverage vendor/bin/phpunit --coverage-html build/coverage"
+                ],
+                "test-phpstan": [
+                    "vendor/bin/phpstan analyse"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Tac Tacelosky",
+                    "email": "tacman@gmail.com"
+                }
+            ],
+            "description": "Tools to generate controllers and templates for the admin interface",
+            "keywords": [
+                "crud",
+                "generator",
+                "symfony"
+            ],
+            "support": {
+                "source": "https://github.com/survos/AdminMakerBundle/tree/main",
+                "issues": "https://github.com/survos/AdminMakerBundle/issues"
+            },
+            "time": "2022-04-13T14:00:36+00:00"
         },
         {
             "name": "symfony/asset",
@@ -10195,98 +10287,6 @@
         }
     ],
     "packages-dev": [
-        {
-            "name": "survos/maker-bundle",
-            "version": "dev-main",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:survos/AdminMakerBundle.git",
-                "reference": "c481b0577856ab9605c62aaf71718e399be14a75"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/survos/AdminMakerBundle/zipball/c481b0577856ab9605c62aaf71718e399be14a75",
-                "reference": "c481b0577856ab9605c62aaf71718e399be14a75",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">= 8.0",
-                "symfony/config": ">= 5.4",
-                "symfony/console": "^6.0",
-                "symfony/options-resolver": ">= 5.4",
-                "symfony/process": ">= 5.4",
-                "symfony/string": ">= 5.4",
-                "twig/twig": "^2.0|^3.0"
-            },
-            "require-dev": {
-                "doctrine/doctrine-bundle": "^1.12.3|^2.0",
-                "doctrine/orm": "^2.3",
-                "phpstan/phpstan": "^1.4",
-                "sensio/framework-extra-bundle": "^6.2",
-                "symfony/form": ">= 5.4",
-                "symfony/http-client": "^4.4|^5.0|^6.0",
-                "symfony/maker-bundle": "^1.38",
-                "symfony/phpunit-bridge": "^4.4|^5.0|^6.0",
-                "symfony/polyfill-php80": "^1.16.0",
-                "symfony/process": "^4.4|^5.0|^6.0",
-                "symfony/security-core": "^4.4|^5.0|^6.0",
-                "symfony/security-csrf": "^6.0",
-                "symfony/twig-bundle": ">= 5.4",
-                "symfony/validator": ">= 5.4",
-                "symfony/workflow": "^6.0",
-                "symfony/yaml": "^4.4|^5.0|^6.0"
-            },
-            "default-branch": true,
-            "type": "symfony-bundle",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.1.0"
-                },
-                "symfony": {
-                    "allow-contrib": "true",
-                    "id": "maker-bundle.survos.com"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Survos\\Bundle\\MakerBundle\\": "src"
-                }
-            },
-            "scripts": {
-                "test": [
-                    "vendor/bin/phpunit"
-                ],
-                "test-ci": [
-                    "vendor/bin/phpunit --coverage-text --coverage-clover=build/coverage.xml coverage"
-                ],
-                "test-coverage": [
-                    "php -d xdebug.mode=coverage vendor/bin/phpunit --coverage-html build/coverage"
-                ],
-                "test-phpstan": [
-                    "vendor/bin/phpstan analyse"
-                ]
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Tac Tacelosky",
-                    "email": "tacman@gmail.com"
-                }
-            ],
-            "description": "Tools to generate controllers and templates for the admin interface",
-            "keywords": [
-                "crud",
-                "generator",
-                "symfony"
-            ],
-            "support": {
-                "source": "https://github.com/survos/AdminMakerBundle/tree/main",
-                "issues": "https://github.com/survos/AdminMakerBundle/issues"
-            },
-            "time": "2022-04-13T14:00:36+00:00"
-        },
         {
             "name": "symfony/debug-bundle",
             "version": "v6.0.3",
