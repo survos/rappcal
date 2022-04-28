@@ -48,6 +48,10 @@
         "symfony/twig-bundle": "6.0.*",
         "symfony/validator": "6.0.*",
         "symfony/web-link": "6.0.*",
+
+        "survos/maker-bundle": "dev-main",
+        "symfony/maker-bundle": "^1.0",
+
         "symfony/webapp-meta": "^1.0",
         "symfony/webpack-encore-bundle": "^1.12",
         "symfony/workflow": "6.0.*",
@@ -112,9 +116,7 @@
         }
     },
     "require-dev": {
-        "survos/maker-bundle": "dev-main",
         "symfony/debug-bundle": "6.0.*",
-        "symfony/maker-bundle": "^1.0",
         "symfony/stopwatch": "6.0.*",
         "symfony/web-profiler-bundle": "6.0.*"
     },
