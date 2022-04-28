@@ -40,8 +40,38 @@ class ScrapeService
 
         $crawler = new Crawler($html);
 
+
         $headline = $crawler->filterXPath('//h1/span')->first()->innerText();
-        $story = new Story(url: $url, html: $html, headline: $headline);
+
+        $story = new Story(url: $url, html: null, headline: $headline);
+
+        dump($url);
+
+        $headline = $crawler->filterXPath(' //*[@property="og:title"]')->attr('content');
+        $author = $crawler->filterXPath(' //meta [@name="author"]')->attr('content');
+        $story->date = $crawler->filterXPath(' //time')->attr('datetime');
+        $story->author = $author;
+        $story->description = $crawler->filterXPath(' //*[@property="og:description"]')->attr('content');
+
+//        <time datetime="2022-02-18T09:30:00-05:00"
+
+        //*[//meta[@property="og:url"]/@content
+
+//        <meta property="og:url" content="https://www.rappnews.com/foothills_forum/young-and-youngish-in-rappahannock/article_b6f2a3a2-9064-11ec-90b5-7f3bf894a1a8.html" />
+
+//        $creditNodes = $crawler->filterXPath(' //*[@itemprop="author"]');
+//        $creditNodes->each(function(Crawler $node) {
+//            dump($node->innerText());
+//        });
+//        dd($creditNodes);
+//
+////        $author = $crawler->filterXPath('//')->first()->innerText();
+//dd('x');
+
+//        <div class="meta">
+//        <span>
+//            <ul class="list-inline">
+//        <li><span itemprop="author" class="tnt-byline">By Bob Hurley for Foothills Forum</span></li>
 
 
         $imageNodes = $crawler->filterXPath(' //*[@itemprop="image"]');

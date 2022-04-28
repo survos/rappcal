@@ -3,7 +3,6 @@
 {% block title %}Hello FoothillsController!{% endblock %}
 
 {% block body %}
-<div class="example-wrapper">
     <h1>Foothills Forum Stories</h1>
     <div>
         Stay up to date, join our email list!
@@ -11,21 +10,28 @@
 {#        <img class="float-start {{ class|default('qr') }}" src="{{ qr_code_url(url) }}" />#}
         <br />{{ url }}
     </div>
-</div>
+    <p style="page-break-after: always;">&nbsp;</p>
 
-    <ul>
     {% for story in articles %}
 {#        {% if loop.index == 1 %} {{ dump(story) }}{%endif%}#}
-        <li>
+        <h1>
+            <span >{{ story.headline }}</span>
+        </h1>
+        {{ story.date|date("F Y") }}
+
             {% if story.image %}
                 <img width="300" src="{{ story.image}}" />
             {% endif %}
-            <img width="60" class=" {{ class|default('qr') }}" src="{{ qr_code_url(story.url) }}" />
-                <span >{{ story.headline }}</span>
+            <a href="{{story.url}}" target="_blank">
+                <img width="60" class=" {{ class|default('qr') }}" src="{{ qr_code_url(story.url) }}" />
+            </a>
+
+            <i>{{ story.description }}</i>
+{#            {{ dump(story) }}#}
             {#            <img class="float-start {{ class|default('qr') }}" src="{{ qr_code_url(story.url) }}" />#}
             <hr />
-        </li>
+        <div class="pagebreak">PAGEBREAK </div>
+        <p style="page-break-after: always;">&nbsp;</p>
     {% endfor %}
-    </ul>
 {% endblock %}
 
