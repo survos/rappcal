@@ -50,6 +50,7 @@
         "symfony/web-link": "6.0.*",
         "symfony/webapp-meta": "^1.0",
         "symfony/webpack-encore-bundle": "^1.12",
+        "symfony/workflow": "6.0.*",
         "symfony/yaml": "6.0.*",
         "tattali/calendar-bundle": "^1.2",
         "twig/extra-bundle": "^2.12|^3.0",
@@ -106,7 +107,8 @@
         "symfony": {
             "allow-contrib": true,
             "require": "6.0.*",
-            "endpoint": ["https://api.github.com/repos/survos/recipes/contents/index.json", "flex://defaults"]
+            "endpoint": ["https://api.github.com/repos/survos/recipes/contents/index.json", "flex://defaults"],
+            "docker": true
         }
     },
     "require-dev": {

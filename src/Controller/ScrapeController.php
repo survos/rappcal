@@ -6,8 +6,10 @@ use App\DTO\Story;
 use App\Entity\UrlCache;
 use App\Repository\EventRepository;
 use App\Service\CalendarService;
+use App\Service\ScrapeService;
 use Goutte\Client;
 use Spatie\IcalendarGenerator\Components\Calendar;
+use League\Csv\Reader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\DomCrawler\Crawler;
@@ -29,10 +31,12 @@ class ScrapeController extends AbstractController
     }
 
     #[Route('/foothills', name: 'app_foothills')]
-    public function index(): Response
+    public function index(ScrapeService $scrapeService): Response
     {
+        $articles = $scrapeService->scrapeFoothillsArticles();
+        // https://www.rappnews.com/news/foothills/
         return $this->render('foothills/index.html.twig', [
-            'articles' => $this->scrapeArticles(),
+            'articles' => $articles,
             'controller_name' => 'FoothillsController',
         ]);
     }
@@ -62,39 +66,7 @@ class ScrapeController extends AbstractController
 //        $response  = $this->httpClient('GET', $url);
         });
         $crawler = new Crawler($html, $url);
-
-
     }
 
-
-    private function scrapeArticles()
-    {
-
-        $url = 'https://www.rappnews.com/news/foothills/';
-        $html = $this->cache->get(md5($url), function(ItemInterface $item) use ($url) {
-            $item->expiresAfter(60 * 60 * 24);
-            // actually do the fetch
-            return $this->httpClient->request('GET', $url)->getContent();
-//        $response  = $this->httpClient('GET', $url);
-        });
-        $crawler = new Crawler($html, $url);
-
-        $articles = [];
-
-        $x = $crawler->filter('.card-body a.tnt-asset-link')->each(function(Crawler $node) use ($articles) {
-//            dd($node, $node->outerHtml(), $node->links()[0]);
-            $base = 'https://www.rappnews.com';
-            return new Story(headline: $node->innerText(), url: $base . $node->attr('href'));
-        });
-        return $x;
-        dd($x);
-        return $articles;
-
-        $crawler->filter('.card-body a.tnt-asset-link')->each(function(Crawler $node) {
-           dd($node->innerText(), $node->outerHtml());
-        });
-        return $html;
-
-    }
 
 }

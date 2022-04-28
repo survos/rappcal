@@ -63,6 +63,7 @@ class AdminMenu extends BaseAdminMenu
         $menu = $u;
 
         $this->addMenuItem($menu, ['route' => 'app_homepage', 'label' => "Home", 'icon' => 'fas fa-home']);
+        $this->addMenuItem($menu, ['route' => 'app_foothills', 'label' => "Foothills", 'icon' => 'fas fa-newspaper']);
     }
 
 }
