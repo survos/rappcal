@@ -4236,12 +4236,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:survos/AdminMakerBundle.git",
-                "reference": "c481b0577856ab9605c62aaf71718e399be14a75"
+                "reference": "ba47b9c4a810c3fb9bc607910225fbee1235b264"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/survos/AdminMakerBundle/zipball/c481b0577856ab9605c62aaf71718e399be14a75",
-                "reference": "c481b0577856ab9605c62aaf71718e399be14a75",
+                "url": "https://api.github.com/repos/survos/AdminMakerBundle/zipball/ba47b9c4a810c3fb9bc607910225fbee1235b264",
+                "reference": "ba47b9c4a810c3fb9bc607910225fbee1235b264",
                 "shasum": ""
             },
             "require": {
@@ -4320,7 +4320,7 @@
                 "source": "https://github.com/survos/AdminMakerBundle/tree/main",
                 "issues": "https://github.com/survos/AdminMakerBundle/issues"
             },
-            "time": "2022-04-13T14:00:36+00:00"
+            "time": "2022-04-28T13:33:53+00:00"
         },
         {
             "name": "symfony/asset",
