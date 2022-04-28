@@ -2,7 +2,9 @@
 
 namespace App\Service;
 
-use App\DTO\Story;
+use App\Entity\Story;
+use App\Repository\StoryRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Goutte\Client;
 use League\Csv\Reader;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -17,6 +19,8 @@ class ScrapeService
 
     public function __construct(private ParameterBagInterface $bag,
                                 private HttpClientInterface $httpClient,
+                                private StoryRepository $storyRepository,
+                                private EntityManagerInterface $entityManager,
                                 private CacheInterface $cache) {
 
     }
@@ -36,22 +40,25 @@ class ScrapeService
     }
 
     private function webpageToStory($url): Story {
-        $html = $this->getPage($url);
 
-        $crawler = new Crawler($html);
+        if (!$story = $this->storyRepository->findOneBy(['url' => $url])) {
+            $html = $this->getPage($url);
+            $story = (new Story())
+                ->setHtml($html)
+                ->setUrl($url);
+            $this->entityManager->persist($story);
+        };
+
+        $crawler = new Crawler($story->getHtml());
 
 
-        $headline = $crawler->filterXPath('//h1/span')->first()->innerText();
-
-        $story = new Story(url: $url, html: null, headline: $headline);
-
-        dump($url);
-
+//        $headline = $crawler->filterXPath('//h1/span')->first()->innerText();
         $headline = $crawler->filterXPath(' //*[@property="og:title"]')->attr('content');
         $author = $crawler->filterXPath(' //meta [@name="author"]')->attr('content');
-        $story->date = $crawler->filterXPath(' //time')->attr('datetime');
-        $story->author = $author;
-        $story->description = $crawler->filterXPath(' //*[@property="og:description"]')->attr('content');
+        $story->setPublicationDate(new \DateTime($crawler->filterXPath(' //time')->attr('datetime')));
+        $story->setAuthor($author);
+        $story->setHeadline($headline);
+        $story->setDescription($crawler->filterXPath(' //*[@property="og:description"]')->attr('content'));
 
 //        <time datetime="2022-02-18T09:30:00-05:00"
 
@@ -73,6 +80,13 @@ class ScrapeService
 //            <ul class="list-inline">
 //        <li><span itemprop="author" class="tnt-byline">By Bob Hurley for Foothills Forum</span></li>
 
+
+        try {
+            $description  = $crawler->filterXPath(' //*[@itemprop="description"]')->first()->attr('content');
+            $story->setDescription(strip_tags($description));
+        } catch (\Exception $exception) {
+
+        }
 
         $imageNodes = $crawler->filterXPath(' //*[@itemprop="image"]');
         if (is_array($imageNodes)) {
@@ -109,7 +123,7 @@ class ScrapeService
             dd($urlNodes, $urlNodes->outerHtml(), $exception);
         }
         $imageUrl = $urlNode->attr('content');
-            $story->image = $imageUrl;
+            $story->setImageUrl($imageUrl);
 //        dd($urlNode, $content);
 //        assert($urlNode->count(), "Missing " . $xPath . " in " . $imageNode->outerHtml());
 //        try {
@@ -159,6 +173,8 @@ class ScrapeService
             $story = $this->webpageToStory($url);
             return $story;
         });
+        $this->entityManager->flush();
+
         return $x;
         return $articles;
 

@@ -7,25 +7,35 @@
     {% for story in articles %}
 {#        {% if loop.index == 1 %} {{ dump(story) }}{%endif%}#}
         <h1 class="headline">
-            <span >{{ story.headline }}</span>
-        </h1>
-        {% if story.image %}
-            <img class="primary-image" src="{{ story.image}}" />
-        {% endif %}
-
-        <span class="publication-date">
-        {{ story.date|date("F Y") }}
-        </span>
-
-
             <a href="{{story.url}}" target="_blank">
                 <img class=" {{ class|default('qr') }}" src="{{ qr_code_url(story.url) }}" />
             </a>
+            <span >{{ story.headline }}</span>
+        </h1>
+        <div class="byline">
+        <span class="publication-date">
+        {{ story.publicationDate|date("F Y") }}
+        </span>
 
-            <span class="description">{{ story.description }}</span>
-{#            {{ dump(story) }}#}
+            <span class="author">
+            {{ story.author }}
+        </span>
+
+        </div>
+
+
+        {% if story.imageUrl %}
+            <img class="primary-image" src="{{ story.imageUrl }}" />
+        {% endif %}
+        <span class="description">{{ story.description }}</span>
+
+        <span class="float-end">
+        </span>
+        <hr />
+        <p class="clearfix" style="page-break-after: always;">&nbsp;</p>
+
+        {#            {{ dump(story) }}#}
             {#            <img class="float-start {{ class|default('qr') }}" src="{{ qr_code_url(story.url) }}" />#}
-        <p style="page-break-after: always;">&nbsp;</p>
     {% endfor %}
 
     <h1>Foothills Forum Stories</h1>

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\DTO\Story;
 use App\Entity\UrlCache;
 use App\Repository\EventRepository;
+use App\Repository\StoryRepository;
 use App\Service\CalendarService;
 use App\Service\ScrapeService;
 use Goutte\Client;
@@ -31,10 +32,22 @@ class ScrapeController extends AbstractController
     }
 
     #[Route('/foothills', name: 'app_foothills')]
-    public function index(ScrapeService $scrapeService): Response
+    public function index(StoryRepository $storyRepository): Response
+    {
+        $articles = $storyRepository->findBy([],[],80);
+
+        return $this->render('foothills/index.html.twig', [
+            'articles' => $articles,
+            'controller_name' => 'FoothillsController',
+        ]);
+    }
+
+    #[Route('/scrape_foothills', name: 'app_scrape_foothills')]
+    public function scrape(ScrapeService $scrapeService): Response
     {
         $articles = $scrapeService->scrapeFoothillsArticles();
         // https://www.rappnews.com/news/foothills/
+
         return $this->render('foothills/index.html.twig', [
             'articles' => $articles,
             'controller_name' => 'FoothillsController',
