@@ -4235,7 +4235,7 @@
             "version": "dev-main",
             "source": {
                 "type": "git",
-                "url": "git@github.com:survos/AdminMakerBundle.git",
+                "url": "https://github.com/survos/AdminMakerBundle.git",
                 "reference": "ba47b9c4a810c3fb9bc607910225fbee1235b264"
             },
             "dist": {
