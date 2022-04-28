@@ -3,35 +3,39 @@
 {% block title %}Hello FoothillsController!{% endblock %}
 
 {% block body %}
+
+    {% for story in articles %}
+{#        {% if loop.index == 1 %} {{ dump(story) }}{%endif%}#}
+        <h1 class="headline">
+            <span >{{ story.headline }}</span>
+        </h1>
+        {% if story.image %}
+            <img class="primary-image" src="{{ story.image}}" />
+        {% endif %}
+
+        <span class="publication-date">
+        {{ story.date|date("F Y") }}
+        </span>
+
+
+            <a href="{{story.url}}" target="_blank">
+                <img class=" {{ class|default('qr') }}" src="{{ qr_code_url(story.url) }}" />
+            </a>
+
+            <span class="description">{{ story.description }}</span>
+{#            {{ dump(story) }}#}
+            {#            <img class="float-start {{ class|default('qr') }}" src="{{ qr_code_url(story.url) }}" />#}
+        <p style="page-break-after: always;">&nbsp;</p>
+    {% endfor %}
+
     <h1>Foothills Forum Stories</h1>
     <div>
         Stay up to date, join our email list!
         {% set url = 'https://foothills-forum.org/contact/' %}
-{#        <img class="float-start {{ class|default('qr') }}" src="{{ qr_code_url(url) }}" />#}
+        {#        <img class="float-start {{ class|default('qr') }}" src="{{ qr_code_url(url) }}" />#}
         <br />{{ url }}
     </div>
     <p style="page-break-after: always;">&nbsp;</p>
 
-    {% for story in articles %}
-{#        {% if loop.index == 1 %} {{ dump(story) }}{%endif%}#}
-        <h1>
-            <span >{{ story.headline }}</span>
-        </h1>
-        {{ story.date|date("F Y") }}
-
-            {% if story.image %}
-                <img width="300" src="{{ story.image}}" />
-            {% endif %}
-            <a href="{{story.url}}" target="_blank">
-                <img width="60" class=" {{ class|default('qr') }}" src="{{ qr_code_url(story.url) }}" />
-            </a>
-
-            <i>{{ story.description }}</i>
-{#            {{ dump(story) }}#}
-            {#            <img class="float-start {{ class|default('qr') }}" src="{{ qr_code_url(story.url) }}" />#}
-            <hr />
-        <div class="pagebreak">PAGEBREAK </div>
-        <p style="page-break-after: always;">&nbsp;</p>
-    {% endfor %}
 {% endblock %}
 
