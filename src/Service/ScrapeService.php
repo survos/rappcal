@@ -55,6 +55,14 @@ class ScrapeService
 //        $headline = $crawler->filterXPath('//h1/span')->first()->innerText();
         $headline = $crawler->filterXPath(' //*[@property="og:title"]')->attr('content');
         $author = $crawler->filterXPath(' //meta [@name="author"]')->attr('content');
+        if (!str_contains($author, 'Foothill')) {
+            $this->entityManager->remove($story);
+            return $story;
+        }
+        $story->setIsDoer(str_contains($headline, 'Doer'));
+        if ($story->getIsDoer()) {
+            $story->setDoerName($headline);
+        }
         $story->setPublicationDate(new \DateTime($crawler->filterXPath(' //time')->attr('datetime')));
         $story->setAuthor($author);
         $story->setHeadline($headline);

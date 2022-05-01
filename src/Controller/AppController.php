@@ -23,6 +23,7 @@ class AppController extends AbstractController
         $events = $scrapeService->getCsvEvents();
 //        $events = $scrapeService->scrapeAtHomeEvents();
 
+
         return $this->render('at_home/index.html.twig', [
 //            'public' => $scrapeService->scrapePublicEvents(),
             'private' => $scrapeService->getCsvEvents(),

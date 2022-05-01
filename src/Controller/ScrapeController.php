@@ -26,19 +26,24 @@ class ScrapeController extends AbstractController
 {
     public function __construct(private CacheInterface $cache,
                                 private CalendarService $calendarService,
-
                                 private HttpClientInterface $httpClient) {
-
     }
 
     #[Route('/foothills', name: 'app_foothills')]
     public function index(StoryRepository $storyRepository): Response
     {
-        $articles = $storyRepository->findBy([],[],80);
+        $newsArticles = [];
+        $articles = $storyRepository->findBy(['isDoer' => false],[],80);
+        foreach ($articles as $article) {
+            if ($doer = $article->getDoerName()) {
+                //
+            } else {
+                array_push($newsArticles, $article);
+            }
+        }
 
         return $this->render('foothills/index.html.twig', [
             'articles' => $articles,
-            'controller_name' => 'FoothillsController',
         ]);
     }
 

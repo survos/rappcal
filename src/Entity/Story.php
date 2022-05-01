@@ -41,6 +41,12 @@ class Story
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $author;
 
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $doerName;
+
+    #[ORM\Column(type: 'boolean', nullable: true)]
+    private $isDoer;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -126,6 +132,30 @@ class Story
     public function setAuthor(?string $author): self
     {
         $this->author = $author;
+
+        return $this;
+    }
+
+    public function getDoerName(): ?string
+    {
+        return $this->doerName;
+    }
+
+    public function setDoerName(?string $doerName): self
+    {
+        $this->doerName = $doerName;
+
+        return $this;
+    }
+
+    public function getIsDoer(): ?bool
+    {
+        return $this->isDoer;
+    }
+
+    public function setIsDoer(?bool $isDoer): self
+    {
+        $this->isDoer = $isDoer;
 
         return $this;
     }
