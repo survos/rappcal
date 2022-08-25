@@ -18,24 +18,6 @@ class CalendarService
         private ParameterBagInterface $bag) {
 
     }
-    public function loadCsv()
-    {
-        $path = $this->bag->get('kernel.project_dir') . '/event_information_data.csv';
-        assert(file_exists($path));
-
-        $csv = Reader::createFromPath($path, 'r');
-        $csv->setHeaderOffset(0); // use the first line as headers for rows
-
-        $header = $csv->getHeader();
-
-        $rows = $csv->getRecords();
-        return $rows;
-        foreach ($rows as $row) {
-            dd($row);
-            var_dump($row);
-        }
-    }
-
     public function parseIcs($icsContent)
     {
         $reader = new IcsReader();

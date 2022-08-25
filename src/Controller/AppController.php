@@ -20,13 +20,12 @@ class AppController extends AbstractController
     #[Route('/at_home', name: 'app_rapp_at_home')]
     public function at_home(ScrapeService $scrapeService): Response
     {
-        $events = $scrapeService->getCsvEvents();
+        $events = $scrapeService->loadCsv();
 //        $events = $scrapeService->scrapeAtHomeEvents();
-
 
         return $this->render('at_home/index.html.twig', [
 //            'public' => $scrapeService->scrapePublicEvents(),
-            'private' => $scrapeService->getCsvEvents(),
+            'private' => $events,
         ]);
     }
 

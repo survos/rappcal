@@ -241,20 +241,17 @@ class ScrapeService
     }
 
 
-    public function getCsvEvents()
+    public function loadCsv()
     {
-        //load the CSV document from a file path
-        $csv = Reader::createFromPath('/home/tac/Downloads/event_information_data.csv', 'r');
-        $csv->setHeaderOffset(0);
+        $path = $this->bag->get('kernel.project_dir') . '/event_information_data.csv';
+        assert(file_exists($path));
 
-        $header = $csv->getHeader(); //returns the CSV header record
-        $records = $csv->getRecords(); //returns all the CSV records as an Iterator object
-        return $records;
-        foreach ($records as $record) {
-            dd($record);
-        }
-        dd($header, $records);
+        $csv = Reader::createFromPath($path, 'r');
+        $csv->setHeaderOffset(0); // use the first line as headers for rows
 
+//        $header = $csv->getHeader();
+        $rows = $csv->getRecords();
+        return $rows;
     }
 
     public function scrapeAtHomeEvents()

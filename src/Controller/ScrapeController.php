@@ -59,20 +59,6 @@ class ScrapeController extends AbstractController
         ]);
     }
 
-    #[Route('/at_home', name: 'app_rapp_at_home')]
-    public function at_home(): Response
-    {
-        return $this->render('athome/index.html.twig', [
-            'events' =>  $this->calendarService->loadCsv()
-        ]);
-    }
-
-
-    // ideally the ISC feed.
-
-    private function loadEvents() {
-        $this->calendarService->loadCsv();
-    }
     private function scrapeEvents() {
         // ideally scrape https://rappathome.net/content.aspx?page_id=4004&club_id=442822&actr=3 after login.
 

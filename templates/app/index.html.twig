@@ -2,7 +2,22 @@
 
 {% block title %}Hello AppController!{% endblock %}
 {% block body %}
-    <a href="{{ path('app_rapp_at_home') }}">Rapp@Home</a>
+
+
+    <h3>Rapp Utilities</h3>
+    <ul>
+    <li>
+        <a href="{{ path('app_rapp_at_home') }}">Scrape Rapp@Home CSV</a>
+        from <a href="https://rappathome.net/content.aspx?page_id=4004&club_id=442822&actr=3">RunMyVillage</a>
+    </li>
+
+    <li>
+        Scrape FF stories
+    </li>
+
+    </ul>
+
+    <h3>Calendar</h3>
 
     <div id="calendar-holder"></div>
 {% endblock %}

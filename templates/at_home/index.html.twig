@@ -4,26 +4,36 @@
 
 {% block body %}
 
-    <table class="table">
-            {% for e in private %}
+    <table class="table js-datatable">
+        <thead>
         <tr>
-            <td>
-                {{ e.title }}
-            </td>
-            <td>
-                {{ e['Start Date'] }}
-            </td>
-            <td>
-                {{ e['Short Description'] }}
-            </td>
+            <th>Title</th>
+            <th>Date</th>
+            <th>Description</th>
         </tr>
-            {% endfor %}
+        </thead>
+
+        <tbody>
+        {% for e in private %}
+            <tr>
+                <td>
+                    {{ e.title }}
+                </td>
+                <td>
+                    {{ e['Start Date'] }}
+                </td>
+                <td>
+                    {{ e['Short Description'] }}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
 
     </table>
 
-{#    {% for e in private %}#}
-{#        {{ dump(e) }}#}
-{#    {% endfor %}#}
+    {#    {% for e in private %} #}
+    {#        {{ dump(e) }} #}
+    {#    {% endfor %} #}
 
 
 {% endblock %}
